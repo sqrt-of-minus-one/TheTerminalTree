@@ -7,6 +7,10 @@ project(TheTerminalTree
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(SOURCE main.cpp)
+set(UI_SOURCE
+	ui/Escape.cpp ui/style.cpp
+	ui/FormattedString/FormattedString.cpp ui/FormattedString/FormattedStringPiece.cpp ui/FormattedString/TextStyle.cpp)
+set(SOURCE
+	main.cpp ${UI_SOURCE})
 
 add_executable(the_tree ${SOURCE})
