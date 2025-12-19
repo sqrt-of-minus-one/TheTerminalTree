@@ -16,15 +16,13 @@
 
 #include "ui/ui.h"
 
-#include <chrono>
 #include <iomanip>
 #include <iostream>
+#include <memory>
 #include <string>
 
 using namespace ui_literals;
 using namespace std::chrono_literals;
-namespace chr = std::chrono;
-using Clock = chr::system_clock;
 
 // Very secret password, do not look!
 const std::string SECRET_PASSWORD = "Happi_Neu_Jear";
@@ -100,55 +98,19 @@ int main(int argc, const char** argv)
 		if (arg_h || arg_v) return 0;
 	}
 
-	Clock::time_point time = Clock::now();
-//	chr::year_month_day ymd(chr::floor<chr::days>(time));
-	std::time_t c_time = Clock::to_time_t(time);
-	std::tm* ymd = std::localtime(&c_time);
-
-	int age = 0;
-	if (arg_age && *arg_age >= 0 && *arg_age <= 4)
+	std::shared_ptr<the_tree::Tree> tree;
+	if (arg_age)
 	{
-		age = *arg_age;
+		tree = std::make_shared<the_tree::Tree>(*arg_age);
 	}
 	else
 	{
-		switch (ymd->tm_mon)
-		{
-		case 11: // December
-		{
-			switch (ymd->tm_mday)
-			{
-			case 26:
-			case 27:
-				age = 1;
-				break;
-			case 28:
-			case 29:
-				age = 2;
-				break;
-			case 30:
-			case 31:
-				age = 3;
-				break;
-			}
-			break;
-		}
-		case 0: // January
-		{
-			if (ymd->tm_mday <= 21)
-			{
-				age = 4;
-			}
-			break;
-		}
-		}
+		tree = std::make_shared<the_tree::Tree>();
 	}
-
-	the_tree::Tree tree(age);
-	tree.start_drawing();
+	tree->start_drawing();
 
 	std::string input;
 	std::getline(std::cin, input);
-	tree.stop_drawing();
+	tree->stop_drawing();
 	return 0;
 }

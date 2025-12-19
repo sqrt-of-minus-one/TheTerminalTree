@@ -16,10 +16,12 @@ class Tree
 {
 private:
 	int age_;
+	bool fixed_age_;
 	bool drawing_ = false;
 	std::unique_ptr<std::thread> draw_thread_;
 
 public:
+	Tree();
 	Tree(int age);
 	~Tree();
 
@@ -28,6 +30,7 @@ public:
 	void stop_drawing();
 
 private:
+	void set_age_(const std::tm& ymd);
 	void draw_loop_(std::ostream& out);
 };
 

@@ -135,7 +135,7 @@ const std::map<int, std::vector<ui::FormattedString>> the_tree::TREES = {
 "*   *    $t:bright_yellow(*$)    *   \n"
 " *      $t:bright_green(/$t:bright_magenta(,$)\\$) *      \n"
 "     * $t:bright_green(/_ _\\$)   *           \n"
-"  *    $t:bright_green(/  $t:bright_red(%$)\\$)         \n"
+"  *    $t:bright_green(/  $t:bright_red(#$)\\$)         \n"
 "    * $t:bright_green(/_$t:bright_cyan(o$)  _\\$) *     \n"
 "      $t:bright_green(/  $t:magenta(0$)  \\$)     *   \n"
 "*    $t:bright_green(/_    $t:bright_blue(*$)_\\$)         \n"
