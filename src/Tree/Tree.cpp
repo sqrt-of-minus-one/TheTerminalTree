@@ -17,6 +17,8 @@ using namespace std::chrono_literals;
 namespace chr = std::chrono;
 using Clock = chr::system_clock;
 
+constexpr auto DRAW_FREQ = 1.s;
+
 Tree::Tree() :
 	fixed_age_(false)
 {}
@@ -33,6 +35,7 @@ Tree::~Tree()
 
 void Tree::draw_once(std::ostream& out, int position)
 {
+	// Get the current date
 	Clock::time_point time = Clock::now();
 	std::time_t c_time = Clock::to_time_t(time);
 	std::tm* ymd = std::localtime(&c_time);
@@ -41,6 +44,8 @@ void Tree::draw_once(std::ostream& out, int position)
 	{
 		set_age_(*ymd);
 	}
+
+	// Print the date and the Tree
 	out << ui::Escape::RESTORE_CURSOR_POSITION << std::setfill('0') << std::right <<
 		std::setw(2) << ymd->tm_mday << '.' << std::setw(2) << ymd->tm_mon + 1 << '.' << std::setw(4) << ymd->tm_year + 1900 << ' ' <<
 			std::setw(2) << ymd->tm_hour << ':' << std::setw(2) << ymd->tm_min << ':' << std::setw(2) << ymd->tm_sec << std::endl <<
@@ -49,7 +54,7 @@ void Tree::draw_once(std::ostream& out, int position)
 
 void Tree::start_drawing(std::ostream& out)
 {
-	stop_drawing();
+	stop_drawing(); // If the Tree is already being drawn, stop it
 	drawing_ = true;
 	draw_thread_ = std::make_unique<std::thread>(&Tree::draw_loop_, this, std::ref(out));
 }
@@ -57,7 +62,7 @@ void Tree::start_drawing(std::ostream& out)
 void Tree::stop_drawing()
 {
 	drawing_ = false;
-	if (draw_thread_)
+	if (draw_thread_) // If the Tree is being drawn, wait until it stops
 	{
 		draw_thread_->join();
 		draw_thread_.reset();
@@ -107,10 +112,10 @@ void Tree::draw_loop_(std::ostream& out)
 	while (drawing_)
 	{
 		draw_once(out, position);
-		if (++position >= at_or_first(TREES, age_).size())
+		if (++position >= at_or_first(TREES, age_).size()) // Next position
 		{
 			position = 0;
 		}
-		std::this_thread::sleep_for(1.s);
+		std::this_thread::sleep_for(DRAW_FREQ);
 	}
 }

@@ -49,6 +49,7 @@ int main(int argc, const char** argv)
 {
 	bool arg_h = false, arg_v = false;
 	std::optional<int> arg_age;
+	// Process the arguments
 	if (argc > 1)
 	{
 		for (int i = 1; i < argc; ++i)
@@ -99,11 +100,11 @@ int main(int argc, const char** argv)
 	}
 
 	std::shared_ptr<the_tree::Tree> tree;
-	if (arg_age)
+	if (arg_age) // Fixed age
 	{
 		tree = std::make_shared<the_tree::Tree>(*arg_age);
 	}
-	else
+	else // The age depends on the current date
 	{
 		tree = std::make_shared<the_tree::Tree>();
 	}
