@@ -49,7 +49,7 @@ struct TextStyle
 	TextStyle& operator-=(const TextStyle& style);
 
 	// The default text style
-	static TextStyle DEFAULT;
+	static const TextStyle DEFAULT;
 };
 std::ostream& operator<<(std::ostream& stream, const TextStyle& style);
 

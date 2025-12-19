@@ -144,14 +144,14 @@ FormattedString ui_literals::operator""_f(const char* string, size_t size)
 enum class ECommand
 {
 	NOT_A_COMMAND,
-	END,			// $) (end of the block)
-	TEXT_COLOUR,	// $text or $t
-	BACK_COLOUR,	// $background or $back
-	BLINKING,		// $blinking or $blink
-	BOLD,			// $bold or $b
-	ITALIC,			// $italic, $i or $it
-	UNDERLINE,		// $underline or $u
-	CROSS_OUT		// $cross_out, $cross or $c
+	END,           // $) (end of the block)
+	TEXT_COLOUR,   // $text or $t
+	BACK_COLOUR,   // $background or $back
+	BLINKING,      // $blinking or $blink
+	BOLD,          // $bold or $b
+	ITALIC,        // $italic, $i or $it
+	UNDERLINE,     // $underline or $u
+	CROSS_OUT      // $cross_out, $cross or $c
 };
 
 struct Command
@@ -162,23 +162,23 @@ struct Command
 
 ECommand recognise_command_(const std::string& string)
 {
-		 if (string == "t" ||
-			 string == "text")			return ECommand::TEXT_COLOUR;
+	     if (string == "t" ||
+	         string == "text")       return ECommand::TEXT_COLOUR;
 	else if (string == "back" ||
-			 string == "background")	return ECommand::BACK_COLOUR;
+	         string == "background") return ECommand::BACK_COLOUR;
 	else if (string == "blink" ||
-			 string == "blinking")		return ECommand::BLINKING;
+	         string == "blinking")   return ECommand::BLINKING;
 	else if (string == "b" ||
-			 string == "bold")			return ECommand::BOLD;
+	         string == "bold")       return ECommand::BOLD;
 	else if (string == "i" ||
-			 string == "it" ||
-			 string == "italic")		return ECommand::ITALIC;
+	         string == "it" ||
+	         string == "italic")     return ECommand::ITALIC;
 	else if (string == "u" ||
-			 string == "underline")		return ECommand::UNDERLINE;
+	         string == "underline")  return ECommand::UNDERLINE;
 	else if (string == "c" ||
-			 string == "cross" ||
-			 string == "cross_out")		return ECommand::CROSS_OUT;
-	else								return ECommand::NOT_A_COMMAND;
+	         string == "cross" ||
+	         string == "cross_out")  return ECommand::CROSS_OUT;
+	else                             return ECommand::NOT_A_COMMAND;
 }
 
 std::list<Command> get_commands_(const std::string& string, std::string::const_iterator& i)

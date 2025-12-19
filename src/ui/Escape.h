@@ -47,21 +47,21 @@ public:
 	EscapeCommand_ operator()(std::vector<int>&& values) const;
 	friend std::ostream& operator<<(std::ostream& stream, const EscapeCommand_& escape);
 
-	static const char* const CSI;
+	static constexpr std::string_view CSI = "\e[";
 
-	static const Escape UP;							// Moves the cursor up
-	static const Escape DOWN;						// Moves the cursor down
-	static const Escape FORWARD;					// Moves the cursor forward
-	static const Escape BACK;						// Moves the cursor back
-	static const Escape NEXT_LINE;					// Moves the cursor to the next line
-	static const Escape PREVIOUS_LINE;				// Moves the cursor to the previous line
-	static const Escape STYLE;						// Applies the style like colour or underline (see the TextStyle class)
-	static const Escape SAVE_CURSOR_POSITION;		// Saves the current cursor position
-	static const Escape RESTORE_CURSOR_POSITION;	// Restores the saved cursor position
-	static const Escape ERASE;						// Erases part of the terminal depending on the argument:
-													//	0 (or missing): from the cursor to the end of the screen;
-													//	1: from the cursor to the beginning of the screen;
-													//	2: the entire screen;
+	static const Escape UP;                      // Moves the cursor up
+	static const Escape DOWN;                    // Moves the cursor down
+	static const Escape FORWARD;                 // Moves the cursor forward
+	static const Escape BACK;                    // Moves the cursor back
+	static const Escape NEXT_LINE;               // Moves the cursor to the next line
+	static const Escape PREVIOUS_LINE;           // Moves the cursor to the previous line
+	static const Escape STYLE;                   // Applies the style like colour or underline (see the TextStyle class)
+	static const Escape SAVE_CURSOR_POSITION;    // Saves the current cursor position
+	static const Escape RESTORE_CURSOR_POSITION; // Restores the saved cursor position
+	static const Escape ERASE;                   // Erases part of the terminal depending on the argument:
+	                                             //  0 (or missing): from the cursor to the end of the screen;
+	                                             //  1: from the cursor to the beginning of the screen;
+	                                             //  2: the entire screen;
 
 private:
 	Escape(char command);

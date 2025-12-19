@@ -66,8 +66,6 @@ Escape::Escape(char command) :
 	command_(command)
 {}
 
-const char* const Escape::CSI = "\e[";
-
 const Escape Escape::UP('A');
 const Escape Escape::DOWN('B');
 const Escape Escape::FORWARD('C');

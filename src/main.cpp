@@ -6,20 +6,149 @@
 
 //////////*\\\\\\\\\\|#############################################################################
 ////////// \\\\\\\\\\|##### ____########  ###  ###  ____####  ##############  ####  ###############
-/////////_ _\\\\\\\\\|####  ############  ###  ###  ########  ##############__####__###############
-/////////* .\\\\\\\\\|####  ############  ___  ###  ########__#####################################
+/////////_*_\\\\\\\\\|####  ############  ###  ###  ########  ##############__####__###############
+/////////o .\\\\\\\\\|####  ############  ___  ###  ########__#####################################
 ////////.  0 \\\\\\\\|####_ ############  ###  ###  #######################__ #### __##############
 ///////_______\\\\\\\|#####_____########__###__###__########__###############______##########2026##
 /////////| |\\\\\\\\\|#############################################################################
 
+#include "Tree/Tree.h"
+
 #include "ui/ui.h"
 
+#include <chrono>
+#include <iomanip>
 #include <iostream>
+#include <string>
 
 using namespace ui_literals;
+using namespace std::chrono_literals;
+namespace chr = std::chrono;
+using Clock = chr::system_clock;
 
-int main()
+// Very secret password, do not look!
+const std::string SECRET_PASSWORD = "Happi_Neu_Jear";
+
+void print_usage(const char* name)
 {
-	std::cout << "This string contains $b(bold$), $i(italic$) and $t:green(green-coloured$) text. It also has parts that are $b$i(both bold and italic$), and $b($i(italic$) inside bold$)"_f << std::endl;
+	std::cout << std::left <<
+		"Usage: " << name << " [options]" << std::endl <<
+		" Options:" << std::endl <<
+		" " << std::setw(20) << "-h / --help: " << "Print usage and exit." << std::endl <<
+		" " << std::setw(20) << "-v / --version: " << "Print version and exit." << std::endl <<
+		" " << std::setw(20) << "-a [age] [password]" << "Draw a tree with the specified age (a secret password is required)" << std::endl;
+}
+
+void print_version()
+{
+	std::cout <<
+		"The Terminal Tree" << std::endl <<
+		"\tby sqrt(-1)" << std::endl <<
+		"\tv. 0.0.1" << std::endl;
+}
+
+int main(int argc, const char** argv)
+{
+	bool arg_h = false, arg_v = false;
+	std::optional<int> arg_age;
+	if (argc > 1)
+	{
+		for (int i = 1; i < argc; ++i)
+		{
+			std::string arg = argv[i];
+			if (arg == "-h" || arg == "--help")
+			{
+				arg_h = true;
+			}
+			else if (arg == "-v" || arg == "--version")
+			{
+				arg_v = true;
+			}
+			else if (arg == "-a")
+			{
+				if (i + 2 >= argc)
+				{
+					std::cout << "More data are expected after -a" << std::endl;
+					print_usage(argv[0]);
+					return 1;
+				}
+				std::string age = argv[++i], password = argv[++i];
+				if (password != SECRET_PASSWORD)
+				{
+					std::cout << "Wrong password" << std::endl;
+					return 1;
+				}
+				else
+				{
+					try
+					{
+						arg_age = std::stoi(age);
+					}
+					catch (std::invalid_argument _)
+					{}
+				}
+			}
+			else
+			{
+				std::cout << "Unknown argument: arg" << std::endl;
+				print_usage(argv[0]);
+				return 1;
+			}
+		}
+		if (arg_h) print_usage(argv[0]);
+		if (arg_v) print_version();
+		if (arg_h || arg_v) return 0;
+	}
+
+	Clock::time_point time = Clock::now();
+//	chr::year_month_day ymd(chr::floor<chr::days>(time));
+	std::time_t c_time = Clock::to_time_t(time);
+	std::tm* ymd = std::localtime(&c_time);
+
+	int age = 0;
+	if (arg_age && *arg_age >= 0 && *arg_age <= 4)
+	{
+		age = *arg_age;
+	}
+	else
+	{
+		switch (ymd->tm_mon)
+		{
+		case 11: // December
+		{
+			switch (ymd->tm_mday)
+			{
+			case 26:
+			case 27:
+				age = 1;
+				break;
+			case 28:
+			case 29:
+				age = 2;
+				break;
+			case 30:
+			case 31:
+				age = 3;
+				break;
+			}
+			break;
+		}
+		case 0: // January
+		{
+			if (ymd->tm_mday <= 21)
+			{
+				age = 4;
+			}
+			break;
+		}
+		}
+	}
+
+	the_tree::Tree tree(age);
+	tree.start_drawing();
+
+	std::string input;
+	std::getline(std::cin, input);
+	tree.stop_drawing();
 	return 0;
 }

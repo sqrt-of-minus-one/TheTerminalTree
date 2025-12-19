@@ -6,8 +6,6 @@
 
 #pragma once
 
-//#include "FormattedString.h"
-
 #include "TextStyle.h"
 
 namespace ui
