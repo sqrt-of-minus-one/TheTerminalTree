@@ -47,7 +47,7 @@ public:
 	EscapeCommand_ operator()(std::vector<int>&& values) const;
 	friend std::ostream& operator<<(std::ostream& stream, const EscapeCommand_& escape);
 
-	static constexpr std::string_view CSI = "\e[";
+	static constexpr std::string_view CSI = "\033[";
 
 	static const Escape UP;                      // Moves the cursor up
 	static const Escape DOWN;                    // Moves the cursor down

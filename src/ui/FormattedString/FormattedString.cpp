@@ -215,8 +215,8 @@ std::list<Command> get_commands_(const std::string& string, std::string::const_i
 			if (!command.empty() || argument_flag)
 			{
 				result.push_front(Command {
-					.command = ECommand::NOT_A_COMMAND,
-					.argument = argument_flag ? (command + ':' + argument + ')') : command + ')' });
+					ECommand::NOT_A_COMMAND,
+					argument_flag ? (command + ':' + argument + ')') : command + ')' });
 				return result;
 			}
 			result.push_front(Command { .command = ECommand::END });
@@ -239,8 +239,8 @@ std::list<Command> get_commands_(const std::string& string, std::string::const_i
 		case '\v':
 		{
 			result.push_front(Command {
-				.command = ECommand::NOT_A_COMMAND,
-				.argument = argument_flag ? (command + ':' + argument + *i) : command + *i });
+				ECommand::NOT_A_COMMAND,
+				argument_flag ? (command + ':' + argument + *i) : command + *i });
 			return result;
 		}
 		default:
@@ -250,8 +250,8 @@ std::list<Command> get_commands_(const std::string& string, std::string::const_i
 		}
 	}
 	return { Command {
-		.command = ECommand::NOT_A_COMMAND,
-		.argument = argument_flag ? (command + ':' + argument) : command } };
+		ECommand::NOT_A_COMMAND,
+		argument_flag ? (command + ':' + argument) : command } };
 }
 
 TextStyle get_style_from_commands_(const std::list<Command> commands)

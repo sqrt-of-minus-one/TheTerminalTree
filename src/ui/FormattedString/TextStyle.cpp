@@ -62,13 +62,13 @@ TextStyle& TextStyle::operator-=(const TextStyle& style)
 }
 
 const TextStyle TextStyle::DEFAULT {
-	.text_colour = EColour::DEFAULT,
-	.back_colour = EColour::DEFAULT,
-	.blinking    = EBlinking::OFF,
-	.bold        = false,
-	.italic      = false,
-	.underline   = EUnderline::OFF,
-	.cross_out   = false
+	EColour::DEFAULT,
+	EColour::DEFAULT,
+	EBlinking::OFF,
+	false,
+	false,
+	EUnderline::OFF,
+	false
 };
 
 std::ostream& ui::operator<<(std::ostream& stream, const TextStyle& style)
